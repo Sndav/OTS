@@ -3,40 +3,41 @@
 import xadmin
 
 from .models import *
+from base.adminxBase import XadminBase
 
 
-# class UserAdmin(object):
-#     list_display = ['id', 'username', 'email', 'gender']
-#     search_fields = ['username', 'email']
-#     list_filter = ['email', 'id']
-
-
-# class EmailVerifyRecordAdmin(object):
-#     list_display = ['id', 'code', 'email', 'send_type', 'send_time']
-#     search_fields = ['email', 'send_type']
-#     list_filter = ['email']
-#
-# xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
-
-class CourseAdmin:
+class CourseAdmin(XadminBase):
     list_display = ['name', 'students', 'click_nums', 'create_time']
-    search_fields = ['name', 'desc','detail']
+    search_fields = ['name', 'desc', 'detail']
     list_filter = ['name', 'click_nums']
+    style_fields = {
+        "desc": "ueditor",
+        "detail": "ueditor",
+    }
 
 
-class LessonAdmin:
+class LessonAdmin(XadminBase):
     list_display = ['course', 'name', 'create_time']
     search_fields = ['course', 'name']
     list_filter = ['course', 'name', 'create_time']
 
 
-class CourseResourceAdmin:
+class LessonDetailAdmin(XadminBase):
+    list_display = ['lesson', 'detail']
+    search_fields = ['lesson', 'detail']
+    list_filter = ['lesson', 'detail']
+    style_fields = {
+        "detail": "ueditor",
+    }
+
+
+class LessonResourceAdmin(XadminBase):
     list_display = ['course', 'name', 'create_time']
     search_fields = ['course', 'name']
     list_filter = ['course', 'name', 'create_time']
 
 
-class LessonNodeAdmin:
+class LessonNodeAdmin(XadminBase):
     list_display = ['lesson', 'user', 'create_time']
     search_fields = ['lesson', 'name']
     list_filter = ['lesson', 'user', 'create_time']
@@ -46,4 +47,5 @@ class LessonNodeAdmin:
 xadmin.site.register(LessonNode, LessonNodeAdmin)
 xadmin.site.register(Course, CourseAdmin)
 xadmin.site.register(Lesson, LessonAdmin)
-xadmin.site.register(CourseResource, CourseResourceAdmin)
+xadmin.site.register(LessonResource, LessonResourceAdmin)
+xadmin.site.register(LessonDetail, LessonDetailAdmin)

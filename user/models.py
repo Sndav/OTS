@@ -24,8 +24,8 @@ class User(AbstractUser):
         choices=gender_choices,
         default='secret')
     image = models.ImageField(
-        upload_to='image/%Y%m',
-        default='image/default.png',
+        upload_to='avatar/%Y%m%d',
+        default='avatar/default.png',
         max_length=100)
     is_teacher = models.BooleanField('老师', default=False)
 

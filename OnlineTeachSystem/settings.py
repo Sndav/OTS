@@ -38,12 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
-    'teacher',
     'xadmin',
     'crispy_forms',
     'course',
     'django.contrib.sites',
     'captcha',
+    'DjangoUeditor',
 ]
 
 MIDDLEWARE = [
@@ -117,8 +117,11 @@ TIME_ZONE = 'Asia/Shanghai'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = "user.user"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload/')
+MEDIA_URL = '/upload/'
+
+DJANGO_WYSIWYG_FLAVOR = "mkeditor"
