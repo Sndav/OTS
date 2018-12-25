@@ -24,6 +24,7 @@ from DjangoUeditor import urls as UeditorUrls
 
 urlpatterns = [
     path('user/', include('user.urls')),
+    path('course/', include('course.urls')),
     path('xadmin/', xadmin.site.urls),
     path('', TemplateView.as_view(template_name='index.html'), name='index'),
     path('captcha/', include('captcha.urls')),
@@ -31,4 +32,3 @@ urlpatterns = [
 ]
 # 静态路由
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
