@@ -86,9 +86,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ots',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
+        'USER': 'ubuntu',
+        'PASSWORD': '123123',
+        'HOST': '123.206.46.44',
     }
 }
 
@@ -129,24 +129,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'upload/')
 MEDIA_URL = '/upload/'
 
 DJANGO_WYSIWYG_FLAVOR = "mkeditor"
-
-# FIX BUG OF  UTF-8
-import MySQLdb
-host = DATABASES["default"]["HOST"]
-passwd = DATABASES["default"]["PASSWORD"]
-user = DATABASES["default"]["USER"]
-dbname = DATABASES["default"]["NAME"]
-
-db = MySQLdb.connect(host=host, user=user, passwd=passwd, db=dbname)
-cursor = db.cursor()
-
-cursor.execute("ALTER DATABASE `%s` CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci'" % dbname)
-
-sql = "SELECT DISTINCT(table_name) FROM information_schema.columns WHERE table_schema = '%s'" % dbname
-cursor.execute(sql)
-
-results = cursor.fetchall()
-for row in results:
-  sql = "ALTER TABLE `%s` convert to character set DEFAULT COLLATE DEFAULT" % (row[0])
-  cursor.execute(sql)
-db.close()
