@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>IoTeach</title>
+  <link rel="stylesheet" href="/static/plugins/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+{#    <link rel="stylesheet" href="/static/css/zui.min.css">#}
+{#<link rel="stylesheet" href="/static/css/bootstrap.css">#}
+  <link rel="shortcut icon" href="images/favicon.png" />
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+  <div class="body-wrapper">
+    <aside class="mdc-persistent-drawer mdc-persistent-drawer--open">
+      <nav class="mdc-persistent-drawer__drawer">
+        <div class="mdc-persistent-drawer__toolbar-spacer">
+                        IoTeach
+        </div>
+        <div class="mdc-list-group">
+          <nav class="mdc-list mdc-drawer-menu">
+              <div class="mdc-list-item mdc-drawer-item" href="#" data-toggle="expansionPanel" target-panel="student_course">
+                  <a class="mdc-drawer-link" href="#">
+                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">grid_on</i>
+                    学生课程管理
+                    <i class="mdc-drawer-arrow material-icons">arrow_drop_down</i>
+                  </a>
+                  <div class="mdc-expansion-panel" id="student_course">
+                    <nav class="mdc-list mdc-drawer-submenu">
+                      <div class="mdc-list-item mdc-drawer-item">
+                          <a class="mdc-drawer-link" href="#">
+                            去上课
+                          </a>
+                        </div>
+                        <div class="mdc-list-item mdc-drawer-item">
+                          <a class="mdc-drawer-link" href="#">
+                            选课管理
+                          </a>
+                        </div>
+                    </nav>
+                  </div>
+                </div>
+            <div class="mdc-list-item mdc-drawer-item" href="#" data-toggle="expansionPanel" target-panel="teach_course">
+              <a class="mdc-drawer-link" href="#">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">dashboard</i>
+                讲师课程管理
+                <i class="mdc-drawer-arrow material-icons">arrow_drop_down</i>
+              </a>
+              <div class="mdc-expansion-panel" id="teach_course">
+                <nav class="mdc-list mdc-drawer-submenu">
+                  <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="#">
+                      课程发布
+                    </a>
+                  </div>
+                  <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="#">
+                      章节发布
+                    </a>
+                  </div>
+                  <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="#">
+                      课节发布
+                    </a>
+                  </div>
+                  <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="#">
+                      编辑课程
+                    </a>
+                  </div>
+                  <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="#">
+                      编辑章节
+                    </a>
+                  </div>
+                  <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="#">
+                      编辑课节
+                    </a>
+                  </div>
+                </nav>
+              </div>
+            </div>
+            <div class="mdc-list-item mdc-drawer-item">
+              <a class="mdc-drawer-link" href="#">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">desktop_mac</i>
+                查看笔记
+              </a>
+            </div>
+          </nav>
+        </div>
+      </nav>
+    </aside>
+    <header class="mdc-toolbar mdc-elevation--z4 mdc-toolbar--fixed">
+      <div class="mdc-toolbar__row">
+        <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+          <a href="#" class="menu-toggler material-icons mdc-toolbar__menu-icon">menu</a>
+          <span class="mdc-toolbar__input">
+            <div class="mdc-text-field">
+              <input type="text" class="mdc-text-field__input" id="css-only-text-field-box" placeholder="搜索课程">
+            </div>
+          </span>
+        </section>
+        <section class="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
+          <div class="mdc-menu-anchor"> <!--未读消息-->
+            <a href="#" class="mdc-toolbar__icon toggle mdc-ripple-surface" data-toggle="dropdown" toggle-dropdown="notification-menu" data-mdc-auto-init="MDCRipple">
+              <i class="material-icons">notifications</i>
+              <span class="dropdown-count">1</span>
+            </a>
+            <div class="mdc-simple-menu mdc-simple-menu--right" tabindex="-1" id="notification-menu">
+              <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+                <li class="mdc-list-item" role="menuitem" tabindex="0">
+                  未读消息1
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="mdc-menu-anchor mr-1">
+            <a href="#" class="mdc-toolbar__icon toggle mdc-ripple-surface" data-toggle="dropdown" toggle-dropdown="logout-menu" data-mdc-auto-init="MDCRipple">
+              <i class="material-icons">more_vert</i>
+            </a>
+            <div class="mdc-simple-menu mdc-simple-menu--right" tabindex="-1" id="logout-menu">
+                <ul class="mdc-simple-menu__items mdc-list" role="menu" aria-hidden="true">
+                  <li class="mdc-list-item" role="menuitem" tabindex="0">
+                    <i class="material-icons mdc-theme--primary mr-1">settings</i>
+                    设置
+                  </li>
+                    {% if not request.user.is_authenticated %}
+                  <a style="text-decoration: none;" href="/user/signup"><li class="mdc-list-item" role="menuitem" tabindex="0">
+                    <i class="material-icons mdc-theme--primary mr-1">account_circle</i>
+                    注册
+                  </li></a>
+
+                  <a style="text-decoration: none;" href="/user/login"><li class="mdc-list-item" role="menuitem" tabindex="0">
+                      <i class="material-icons mdc-theme--primary mr-1">exit_to_app</i>
+                          登录
+                  </li></a>
+                    {% else %}
+                        <a style="text-decoration: none;" href="/user/logout">
+                  <li class="mdc-list-item" role="menuitem" tabindex="0">
+                    <i class="material-icons mdc-theme--primary mr-1">power_settings_new</i>
+                    退出
+                  </li></a>
+                    {% endif %}
+                </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </header>
+    <div class="page-wrapper mdc-toolbar-fixed-adjust">
+      <main class="content-wrapper">
+          <div class="mdc-layout-grid">
+          <div class="mdc-layout-grid__inner">
+                {% block content %}{% endblock %}
+          </div>
+          </div>
+      </main>
+          <footer>
+        <div class="mdc-layout-grid">
+          <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6">
+              <span class="text-muted">Copyright © 2018 IoTeach Group. All rights reserved.</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+  </div>
+  <script src="/static/plugins/material-components-web/dist/material-components-web.min.js"></script>
+  <script src="/static/plugins/jquery/dist/jquery.min.js"></script>
+  <script src="/static/js/misc.js"></script>
+  <script src="/static/js/material.js"></script>
+  {% block footer %}{% endblock %}
+
+</body>
+
+</html>
