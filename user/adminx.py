@@ -20,14 +20,13 @@ class BaseSetting(XadminBase):  # 开启主题功能
 
 class GlobalSettings(XadminBase):  # 全局修改，固定写法
     # 修改title
-    site_title = 'XXX'
+    site_title = 'IoTeach'
     # 修改footer
-    site_footer = 'XXX'
+    site_footer = 'IoTeach'
     # 收起菜单
     menu_style = 'accordion'
 
 
 # 注册模块
 xadmin.site.register(PublishedCourse, PublishedCourseAdmin)
-xadmin.site.register(views.BaseAdminView, BaseSetting)
 xadmin.site.register(views.CommAdminView, GlobalSettings)

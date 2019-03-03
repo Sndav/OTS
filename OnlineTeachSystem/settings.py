@@ -86,10 +86,17 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ots',
-        'USER': 'ubuntu',
-        'PASSWORD': '123123',
+        'USER': 'xiaobai',
+        'PASSWORD': 'xiaobai321',
         'HOST': '123.206.46.44',
+        'OPTIONS': { 'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci;SET NAMES \'utf8\';' },
+        'TEST': {
+            'NAME': 'test_ots',
+            'CHARSET': 'utf8',
+            'COLLATION': 'utf8_general_ci',
+        },
     }
+    
 }
 
 
@@ -129,3 +136,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'upload/')
 MEDIA_URL = '/upload/'
 
 DJANGO_WYSIWYG_FLAVOR = "mkeditor"
+

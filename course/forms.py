@@ -4,6 +4,7 @@ from .models import *
 
 
 class CourseFrom(forms.ModelForm):
+
     captcha = CaptchaField()
 
     class Meta:
@@ -28,6 +29,7 @@ class LessonDetailForm(forms.ModelForm):
 
 
 class LessonResourceForm(forms.ModelForm):
+
     captcha = CaptchaField()
 
     class Meta:
