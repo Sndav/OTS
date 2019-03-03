@@ -1,0 +1,132 @@
+.background{
+    background-image: url("backoground.png");
+    background-size: cover;
+}
+.div-relative{
+    position: relative;
+}
+.framework{
+    z-index: 50;
+    margin-left: auto;
+    margin-right: auto;
+}
+.logo{
+    z-index: 100;
+    margin-top: -3000px;
+}
+.message{
+    z-index: 80;
+    margin-top: -2000px;
+}
+.send1{
+    margin-top: -950px;
+    margin-left: 1250px
+}
+.send2{
+    z-index: 200;
+    margin-top: -142px;
+    margin-left: 1050px;
+}
+.input1{
+    position: absolute;
+    top: 277px;
+    left: 360px;
+    z-index: 200;
+    border:0px;background:rgba(0, 0, 0, 0);
+    height:30px;
+    width: 310px;
+    font-size:22px;
+    color: white;
+    font-family: 微软雅黑;
+
+}
+.input2{
+    position: absolute;
+    top: 277px;
+    left: 770px;
+    z-index: 200;
+    border:0px;background:rgba(0, 0, 0, 0);
+    height:25px;
+    font-size:22px;
+    color: white;
+    font-family: 微软雅黑;
+}
+.input3{
+    position: absolute;
+    top: 385px;
+    left: 360px;
+    z-index: 200;
+    border:0px;background:rgba(0, 0, 0, 0);
+    height:25px;
+    font-size:22px;
+    color: white;
+    font-family: 微软雅黑;
+}
+.input4{
+    position: absolute;
+    top: 385px;
+    left: 770px;
+    z-index: 200;
+    border:0px;background:rgba(0, 0, 0, 0);
+    height:25px;
+    font-size:22px;
+    color: white;
+    font-family: 微软雅黑;
+}
+.input5{
+    width:730px;
+    height:80px;
+    position: absolute;
+    top: 500px;
+    left: 360px;
+    z-index: 200;
+    border:0px;background:rgba(0, 0, 0, 0);
+    font-size:22px;
+    color: white;
+    font-family: 微软雅黑;
+}
+.label1{
+    font-family: 微软雅黑;
+    color: antiquewhite;
+    position: absolute;
+    top: 240px;
+    left: 360px;
+    font-size: 18px;
+    letter-spacing: 8px;
+}
+.label2{
+    font-family: 微软雅黑;
+    color: antiquewhite;
+    position: absolute;
+    top: 240px;
+    left: 770px;
+    font-size: 18px;
+    letter-spacing: 8px;
+}
+.label3{
+    font-family: 微软雅黑;
+    color: antiquewhite;
+    position: absolute;
+    top: 346px;
+    left: 360px;
+    font-size: 18px;
+    letter-spacing: 8px;
+}
+.label4{
+    font-family: 微软雅黑;
+    color: antiquewhite;
+    position: absolute;
+    top: 346px;
+    left: 770px;
+    font-size: 18px;
+    letter-spacing: 8px;
+}
+.label5{
+    font-family: 微软雅黑;
+    color: antiquewhite;
+    position: absolute;
+    top: 452px;
+    left: 360px;
+    font-size: 18px;
+    letter-spacing: 4px;
+}
