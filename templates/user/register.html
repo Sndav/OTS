@@ -1,60 +1,65 @@
 {% extends "base/base.html" %}
+{% block title%}注册{% endblock %}
 {% block footer %}
     <script src="/static/js/captcha.js"></script>
 {% endblock %}
 {% block content %}
-<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12 mdc-layout-grid__cell--align-middle" style="text-align: center">
-  <div class="mdc-card">
-    <section class="mdc-card__primary">
-        <h1 class="mdc-card__title mdc-card__title--large">注册</h1>
-            {% for key,error in signup_form.errors.items %}
-
-          {{ key }}{{ error }}
-
-                    {% endfor %}
-            {{ msg }}
-    </section>
-     <section class="mdc-card__supporting-text">
-    <form id="email_register_form" method="post" action="" autocomplete="off">
-        <div class="mdc-text-field mdc-text-field--no-label">
-          <input type="text" name="username" id="username" class="mdc-text-field__input">
-          <label for="username" class="mdc-floating-label mdc-floating-label--float-above">用户名</label>
-           <div class="mdc-line-ripple"></div>
-        </div>
-        <div class="mdc-text-field">
-          <input type="password" name="password1" id="password1" class="mdc-text-field__input">
-            <label for="password1" class="mdc-floating-label mdc-floating-label--float-above">密码</label>
-           <div class="mdc-line-ripple"></div>
-        </div>
-        <div class="mdc-text-field">
-          <input type="password" name="password2" id="password2" class="mdc-text-field__input">
-            <label for="password" class="mdc-floating-label mdc-floating-label--float-above">密码</label>
-           <div class="mdc-line-ripple"></div>
-        </div><br>
-        <div class="mdc-text-field">
-          <input type="text" name="email" id="email" class="mdc-text-field__input">
-            <label for="email" class="mdc-floating-label mdc-floating-label--float-above">邮箱</label>
-           <div class="mdc-line-ripple"></div>
-
-        </div>
-        <div class="mdc-text-field">
-          <input type="text" name="nickname" id="nickname" class="mdc-text-field__input">
-            <label for="nickname" class="mdc-floating-label mdc-floating-label--float-above">昵称</label>
-           <div class="mdc-line-ripple"></div>
-        </div><br>
-        <div class="mdc-text-field">
-                <input id="id_captcha_1" class="mdc-text-field__input" placeholder="请输入验证码" autocomplete="off" autocapitalize="off" spellcheck="false" name="captcha_1" type="text" >
-                <label for="id_captcha_1" class="mdc-floating-label mdc-floating-label--float-above">验证码</label>
-               <div class="mdc-line-ripple"></div>
-                <input id="id_captcha_0" name="captcha_0" value="{{hashkey}}" type="hidden">
-        </div>
-        <img class="captcha" alt="captcha" src="{{image_url}}"><br>
-        <button class="mdc-button mdc-button--raised">
+  <div class="container">
+    {% for key,error in signup_form.errors.items %}
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert">
+            &times;
+        </a>
+        <strong>警告！</strong>
+        {{ key }}{{ error }}
+    </div>
+    {% endfor %}
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">创建一个账号</h1>
+              </div>
+              <form class="user" id="email_register_form" method="post" action="" autocomplete="off">
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="用户名">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-control-user" id="nickname" name="nickname" placeholder="昵称">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email">
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="password" class="form-control form-control-user" id="password1" name="password1" placeholder="密码">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="password" class="form-control form-control-user" id="password2" name="password2" placeholder="重复密码">
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                    <input  class="form-control form-control-user" id="id_captcha_1" placeholder="请输入验证码" autocomplete="off" autocapitalize="off" spellcheck="false" name="captcha_1" type="text">
+                    </div>
+                    <div class="col-sm-2">
+                        <img style="height: 50px" class="captcha w-100" alt="captcha" src="{{image_url}}"><br></div>
+                    <input id="id_captcha_0" name="captcha_0" value="{{hashkey}}" type="hidden">
+                </div>
+                <button type="submit" class="btn btn-primary btn-user btn-block">
                   注册
-        </button>
-    {% csrf_token %}
-    </form>
-    </section>
+                </button>
+                  {% csrf_token %}
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+
 {% endblock %}

@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <title>UserInfoPage</title>
-</head>
-<body>
-    {% if info_list %}
-        <ul>
-        {% for key,value in info_list.items %}
-            {{ key }}:{{ value }}<br/>
+{% extends "base/base.html" %}
+{% block head %}
+    {{ form.media }}
+{% endblock %}
+{% load filters %}
+{% block title%}用户信息{% endblock %}
+{% block content %}
+{% if form.errors%}
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        {% for key,error in form.errors.items %}
+        {{ key }}{{ error }}
         {% endfor %}
-        </ul>
-    {% else %}
-        <p>No User.</p>
-    {% endif %}
-</body>
-</html>
+    </div>
+{% endif %}
+    {{ form }}
+{% endblock %}

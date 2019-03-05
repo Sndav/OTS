@@ -80,3 +80,11 @@ class SignUpView(View):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+
+class InfoView(View):
+    def get(self, request, user_id):
+        user = User.objects.get(id=user_id)
+        return render(request, 'user/info.html',{
+            'form': user,
+        })

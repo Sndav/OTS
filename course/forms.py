@@ -9,7 +9,7 @@ class CourseFrom(forms.ModelForm):
 
     class Meta:
         model = Course
-        fields = ["name", "desc", "detail", "degree", "required_knowledge"]
+        fields = ["name", "desc", "detail", "degree", "teacher"]
 
 
 class LessonForm(forms.ModelForm):
@@ -25,7 +25,7 @@ class LessonDetailForm(forms.ModelForm):
 
     class Meta:
         model = LessonDetail
-        fields = ["lesson", "detail"]
+        fields = ["name", "lesson", "detail"]
 
 
 class LessonResourceForm(forms.ModelForm):

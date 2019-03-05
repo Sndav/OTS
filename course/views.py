@@ -1,5 +1,7 @@
 from django.views import View
 from django.shortcuts import render, HttpResponseRedirect
+from captcha.models import CaptchaStore
+from captcha.helpers import captcha_image_url
 
 from .forms import *
 from .models import *
@@ -9,7 +11,15 @@ from .models import *
 class AddCourseView(View):
     def get(self, request):
         course_form = CourseFrom()
-        return render(request, 'course/addcourse.html', {'form': course_form})
+        hashkey = CaptchaStore.generate_key()
+        imageURL = captcha_image_url(hashkey)
+
+        return render(request, 'course/addcourse.html', {
+            'form': course_form,
+            'hashkey': hashkey,
+            'image_url': imageURL
+
+        })
 
     def post(self, request):
         course_form = CourseFrom(request.POST)
@@ -17,7 +27,14 @@ class AddCourseView(View):
             ret = course_form.save()
             return HttpResponseRedirect('/course/{0}/view'.format(ret.pk))
         else:
-            return render(request, 'course/addcourse.html', {'form': course_form})
+            hashkey = CaptchaStore.generate_key()
+            imageURL = captcha_image_url(hashkey)
+            return render(request, 'course/addcourse.html', {
+                'form': course_form,
+                'hashkey': hashkey,
+                'image_url': imageURL
+
+            })
 
 
 class EditCourseView(View):
@@ -29,15 +46,28 @@ class EditCourseView(View):
         course_form = CourseFrom(request.POST, instance=Course.objects.get(id=course_id))
         if course_form.is_valid():
             course_form.save()
-            return HttpResponseRedirect('/course/lesson/detail')
+            return HttpResponseRedirect('/course/all')
         else:
-            return render(request, 'course/addcourse.html', {'form': course_form})
+            return render(request, 'course/editcourse.html', {'form': course_form})
 
 
 class ViewCourseView(View):
     def get(self, request, course_id):
-        course_form = Course.objects.get(id=course_id).__dict__
+        course_form = Course.objects.get(id=course_id)
         return render(request, 'course/viewcourse.html', {'form': course_form})
+
+
+class ViewAllCourseView(View):
+    def get(self, request):
+        form = Course.objects.filter(teacher=request.user.id)
+        return render(request, 'course/viewallcourse.html', {'form': form})
+
+
+class ViewDeleteCourseView(View):
+    def get(self, request, course_id):
+        model = Course.objects.get(id=course_id)
+        form = Course.delete(model)
+        return HttpResponseRedirect('/course/all')
 
 
 # Lesson
@@ -45,14 +75,13 @@ class AddLessonView(View):
     def get(self, request, course_id):
         lesson_form = LessonForm()
         lesson_form.fields['course'].queryset = Course.objects.filter(pk=course_id)
-        return render(request, 'course/lesson/addlesson.html', {'form': lesson_form})
+        return render(request, 'course/lesson/addlesson.html', {'form': lesson_form,'course_id':course_id})
 
     def post(self, request, course_id):
         lesson_form = LessonForm(request.POST)
         if lesson_form.is_valid():
             ret = lesson_form.save()
-            print(ret)
-            return HttpResponseRedirect('/course/{0}/lesson/{1}/view'.format(ret.course.pk, ret.pk))
+            return HttpResponseRedirect('/course/{0}/lesson'.format(ret.course.pk, ret.pk))
         else:
             return render(request, 'course/lesson/addlesson.html', {'form': lesson_form})
 
@@ -67,7 +96,7 @@ class EditLessonView(View):
         lesson_form = LessonForm(request.POST, instance=Lesson.objects.get(pk=lesson_id))
         if lesson_form.is_valid():
             ret = lesson_form.save()
-            return HttpResponseRedirect('/course/{0}/lesson/{1}/view'.format(ret.course.pk, ret.pk))
+            return HttpResponseRedirect('/course/{0}/lesson'.format(ret.course.pk, ret.pk))
         else:
             return render(request, 'course/lesson/editlesson.html', {'form': lesson_form})
 
@@ -78,19 +107,32 @@ class ViewLessonView(View):
         return render(request, 'course/lesson/viewlesson.html', {'form': lesson_form})
 
 
+class ViewAllLessonView(View):
+    def get(self, request, course_id):
+        form = Lesson.objects.filter(course_id=course_id)
+        return render(request, 'course/lesson/viewalllesson.html', {'form': form})
+
+
+class DeleteLessonView(View):
+    def get(self, request, course_id, lesson_id):
+        form = Lesson.objects.get(id=lesson_id)
+        Lesson.delete(form)
+        return HttpResponseRedirect('/course/{0}/lesson'.format(course_id))
+
+
 # LessonDetail
 class AddLessonDetail(View):
     def get(self, request, course_id, lesson_id):
         lesson_form = LessonDetailForm()
         lesson_form.fields['lesson'].queryset = Lesson.objects.filter(pk=lesson_id)
-        return render(request, 'course/lesson/detail/addlessondetail.html', {'form': lesson_form})
+        return render(request, 'course/lesson/detail/addlessondetail.html', {'form': lesson_form,'lesson_id':lesson_id})
 
     def post(self, request, course_id, lesson_id):
         lesson_form = LessonDetailForm(request.POST)
         if lesson_form.is_valid():
             ret = lesson_form.save()
             print(ret)
-            return HttpResponseRedirect('/course/{0}/lesson/{1}/detail/{2}/view'.format(
+            return HttpResponseRedirect('/course/{0}/lesson/{1}/detail'.format(
                 ret.lesson.course.pk,
                 ret.lesson.pk,
                 ret.pk
@@ -103,13 +145,13 @@ class EditLessonDetail(View):
     def get(self, request, course_id, lesson_id, detail_id):
         lesson_form = LessonDetailForm(instance=LessonDetail.objects.get(pk=detail_id))
         lesson_form.fields['lesson'].queryset = Lesson.objects.filter(pk=lesson_id)
-        return render(request, 'course/lesson/detail/editlessondetail.html', {'form': lesson_form})
+        return render(request, 'course/lesson/detail/editlessondetail.html', {'form': lesson_form,'lesson_id':lesson_id})
 
     def post(self, request, course_id, lesson_id, detail_id):
         lesson_form = LessonDetailForm(request.POST, instance=LessonDetail.objects.get(pk=detail_id))
         if lesson_form.is_valid():
             ret = lesson_form.save()
-            return HttpResponseRedirect('/course/{0}/lesson/{1}/detail/{2}/view'.format(
+            return HttpResponseRedirect('/course/{0}/lesson/{1}/detail'.format(
                 ret.lesson.course.pk,
                 ret.lesson.pk,
                 ret.pk
@@ -120,8 +162,25 @@ class EditLessonDetail(View):
 
 class ViewLessonDetail(View):
     def get(self, request, course_id, lesson_id, detail_id):
-        lesson_form = LessonDetail.objects.get(id=detail_id).__dict__
+        lesson_form = LessonDetail.objects.get(id=detail_id)
         return render(request, 'course/lesson/detail/viewlessondetail.html', {'form': lesson_form})
+
+
+class ViewAllLessonDetail(View):
+    def get(self, request, course_id, lesson_id):
+        lesson_form = LessonDetail.objects.filter(lesson_id=lesson_id)
+        return render(request, 'course/lesson/detail/viewalldetail.html', {'form': lesson_form})
+
+
+class DeleteLessonDetail(View):
+    def get(self, request, course_id, lesson_id, detail_id):
+        detail_form = LessonDetail.objects.get(id=detail_id)
+        LessonDetail.delete(detail_form)
+        return HttpResponseRedirect('/course/{0}/lesson/{1}/detail'.format(
+            course_id,
+            lesson_id,
+            detail_id
+        ))
 
 
 # LessonRecourse

@@ -1,40 +1,55 @@
 {% extends "base/base.html" %}
+{% block title%}登录{% endblock %}
 {% block footer %}
     <script src="/static/js/captcha.js"></script>
 {% endblock %}
 {% block content %}
-<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12 mdc-layout-grid__cell--align-middle" style="text-align: center">
-  <div class="mdc-card">
-    <section class="mdc-card__primary">
-        <center><h1 class="mdc-card__title mdc-card__title--large">登录</h1></center>
-        <div>
-            {% for key,error in login_form.errors.items %}{{ error }}{% endfor %}
-        </div>
-    </section>
-    <section class="mdc-card__supporting-text">
-    <form action="/user/login/" method="post" autocomplete="off">
-        用户名:
-          <div class="mdc-text-field mdc-text-field--box w-30">
-              <input type="text" name="username" id="account_l" class="mdc-text-field__input" aria-controls="name-validation-message" placeholder="用户名">
-          </div>
-        密码:
-          <div class="mdc-text-field mdc-text-field--box w-30">
-            <input name="password" id="password_l" type="password" class="mdc-text-field__input" aria-controls="name-validation-message" placeholder="密码">
-          </div>
-
-        验证码
-        <div class="mdc-text-field mdc-text-field--box w-30">
-                <input id="id_captcha_1" class="mdc-text-field__input" placeholder="请输入验证码" autocomplete="off" autocapitalize="off" spellcheck="false" name="captcha_1" type="text" >
-                <img class="captcha" alt="captcha" src="{{image_url}}">
-                <input id="id_captcha_0" name="captcha_0" value="{{hashkey}}" type="hidden">
-                {{ login_form.captcha.errors }}
-        </div>
-        <button class="mdc-button mdc-button--raised">
+{% if login_form.errors%}
+    <div class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert">
+            &times;
+        </a>
+        {% for key,error in login_form.errors.items %}
+        {{ key }}{{ error }}
+        {% endfor %}
+    </div>
+{% endif %}
+  <div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">登录</h1>
+              </div>
+              <form class="user" method="post" action="" autocomplete="off">
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="用户名">
+                  </div>
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="password" class="form-control form-control-user" id="password1" name="password" placeholder="密码">
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                    <input  class="form-control form-control-user" id="id_captcha_1" placeholder="请输入验证码" autocomplete="off" autocapitalize="off" spellcheck="false" name="captcha_1" type="text">
+                    </div>
+                    <div class="col-sm-2">
+                        <img style="height: 50px" class="captcha w-100" alt="captcha" src="{{image_url}}"><br></div>
+                    <input id="id_captcha_0" name="captcha_0" value="{{hashkey}}" type="hidden">
+                </div>
+                <button type="submit" class="btn btn-primary btn-user btn-block">
                   登录
-        </button>
-    {% csrf_token %}
-    </form>
-    </section>
+                </button>
+                  {% csrf_token %}
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+
 {% endblock %}

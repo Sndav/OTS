@@ -3,7 +3,8 @@ from . import views
 
 urlpatterns = [
     # 课程 /course/add
-    #     /course/<id>/(edit,view)
+    #     /course/<id>/(edit,view,delete)
+    #     /course/all/
     path(
         'add',
         views.AddCourseView.as_view(),
@@ -16,9 +17,24 @@ urlpatterns = [
         '<int:course_id>/view/',
         views.ViewCourseView.as_view(),
         name='查看课程'),
-
+    path(
+        'all',
+        views.ViewAllCourseView.as_view(),
+        name='查看所有课程'
+    ),
+    path(
+        '',
+        views.ViewAllCourseView.as_view(),
+        name='查看所有课程'
+    ),
+    path(
+        '<int:course_id>/delete/',
+        views.ViewDeleteCourseView.as_view(),
+        name='删除课程'
+    ),
     # 章节 /course/<id>/lesson/add
-    #     /course/<id>/lesson/<id>/(edit,view)
+    #     /course/<id>/lesson
+    #     /course/<id>/lesson/<id>/(delete,edit,view)
     path(
         '<int:course_id>/lesson/add',
         views.AddLessonView.as_view(),
@@ -31,6 +47,15 @@ urlpatterns = [
         '<int:course_id>/lesson/<int:lesson_id>/view',
         views.ViewLessonView.as_view(),
         name='查看章节'),
+    path(
+        '<int:course_id>/lesson/<int:lesson_id>/delete',
+        views.DeleteLessonView.as_view(),
+        name='删除章节'),
+    path(
+        '<int:course_id>/lesson/',
+        views.ViewAllLessonView.as_view(),
+        name="查看所有章节"
+    ),
 
 
     # 章节细节 /course/<id>/lesson/<id>/detail/add
@@ -47,7 +72,14 @@ urlpatterns = [
         '<int:course_id>/lesson/<int:lesson_id>/detail/<int:detail_id>/view/',
         views.ViewLessonDetail.as_view(),
         name='查看章节细节'),
-
+    path(
+        '<int:course_id>/lesson/<int:lesson_id>/detail',
+        views.ViewAllLessonDetail.as_view(),
+        name='查看所有章节细节'),
+    path(
+        '<int:course_id>/lesson/<int:lesson_id>/detail/<int:detail_id>/delete',
+        views.DeleteLessonDetail.as_view(),
+        name='删除章节细节'),
     # 章节资源 /course/<id>/lesson/<id>/resource/add
     #        /course/<id>/lesson/<id>/resource/<id>/(edit,view)
     path(

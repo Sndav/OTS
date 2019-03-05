@@ -28,6 +28,7 @@ class User(AbstractUser):
         default='avatar/default.png',
         max_length=100)
     is_teacher = models.BooleanField('老师', default=False)
+    desc = models.TextField("描述信息", default="暂时没有描述信息")
 
     def __str__(self):
         return self.username
