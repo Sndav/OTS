@@ -139,6 +139,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'upload/')
 MEDIA_URL = '/upload/'
 
 DJANGO_WYSIWYG_FLAVOR = "mkeditor"
-
-# FIX BUG
-db=MySQLdb.connect()
