@@ -94,6 +94,9 @@ DATABASES = {
             'NAME': 'test_ots',
             'CHARSET': 'utf8',
             'COLLATION': 'utf8_general_ci',
+            'OPTIONS': {
+                'init_command': 'DROP DATABASE IF EXISTS `test_ots`'
+            },
         },
     }
     
@@ -137,3 +140,5 @@ MEDIA_URL = '/upload/'
 
 DJANGO_WYSIWYG_FLAVOR = "mkeditor"
 
+# FIX BUG
+db=MySQLdb.connect()
