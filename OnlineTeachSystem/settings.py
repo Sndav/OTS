@@ -89,7 +89,7 @@ DATABASES = {
         'USER': 'xiaobai',
         'PASSWORD': 'xiaobai321',
         'HOST': '123.206.46.44',
-        'OPTIONS': { 'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci;SET NAMES \'utf8\';' },
+        'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB,character_set_connection=utf8,collation_connection=utf8_unicode_ci;SET NAMES \'utf8\';' },
         'TEST': {
             'NAME': 'test_ots',
             'CHARSET': 'utf8',
