@@ -37,20 +37,3 @@ class User(AbstractUser):
         verbose_name = '用户信息'
         verbose_name_plural = verbose_name
 
-
-class PassedCourse(models.Model):
-    user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE)
-    passed = models.TextField('通过题目', default=pickle.dumps([{}]))
-
-    class Meta:
-        verbose_name = '通过题目'
-        verbose_name_plural = verbose_name
-
-
-class PublishedCourse(models.Model):
-    user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE)
-    publish = models.TextField('发布题目', default=pickle.dumps([{}]))
-
-    class Meta:
-        verbose_name = '发布题目'
-        verbose_name_plural = verbose_name

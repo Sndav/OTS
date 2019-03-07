@@ -17,6 +17,7 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import *
 
 import xadmin
 from DjangoUeditor import urls as UeditorUrls
@@ -26,9 +27,10 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('course/', include('course.urls')),
     path('xadmin/', xadmin.site.urls),
-    path('', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('', IndexView.as_view(), name='index'),
     path('captcha/', include('captcha.urls')),
     path('ueditor/', include(UeditorUrls)),
+    path('redirect/', RedirectView.as_view()),
 ]
 # 静态路由
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

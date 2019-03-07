@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'captcha',
     'DjangoUeditor',
+    'links',
 ]
 
 MIDDLEWARE = [
